@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Forward School Demo</title>
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        </head>
+    <body>
+        <nav class="navbar navbar-default navbar-static-top">
+            <div class="container">
+                <ul class="nav navbar-nav">
+                    {# Django Home link | Admin Link | Register Link | Login | Logout #}
+                    <li><a class="navbar-brand" href="{% url 'index' %}">Forward School</a></li>
+                    <li><a class="navbar-link" href="{% url 'admin:index' %}">Admin</a></li>
+                    <li><a class="navbar-link" href="{% url 'hello_world:register' %}">Register</a></li>
+                    <li><a class="navbar-link" href="{% url 'index_book' %}">Book</a></li>
+                    <li><a class="navbar-link" href="{% url 'combine:home' %}">Combine</a></li>
+
+                    {# Add some logic if user is logged in or logged out #}
+                    {% if user.is_authenticated %}
+                        <li><a class="navbar-link" href="{% url 'logout' %}">Logout</a></li>
+                    {% else %}
+                        <li><a class="navbar-link" href="{% url 'hello_world:user_login' %}">Login</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container">
+            {% block body_block %}
+            {% endblock %}
+        </div>
+    </body>
+</html>

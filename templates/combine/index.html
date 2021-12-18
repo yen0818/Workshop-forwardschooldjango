@@ -1,0 +1,98 @@
+{% extends "combine/base.html" %}
+{% block body_block %}
+<div style="text-align:center">
+  <h1>
+    Welcome to Combine App!
+  </h1>
+    <div class="container-fluid">
+      <div class="container-fluid">
+        <div class="row">
+            <div class="col-3">
+            <button onclick="click1()" >click me</button>
+            </div>
+            <div class="col-9">
+            <span style="background-color:rgb(184, 172, 172)" id="customer"></span>
+            </div>
+        <div>
+        <div class="row">
+            <div class="col-3">
+            <button onclick="getavg()">Get Average</button>
+            </div>
+            <div class="col-9" style="text-align:center">
+            <input id="avg" type="text">
+            <label>Result:</label>
+            <span id="avg_res">
+            </div>
+        <div>
+        <div class="row">
+            <div class="col-3">
+            <button onclick="getimage()">load graph</button>
+            </div>
+            <div class="col-9">
+                <img id="matplotlib" width="500">
+            </div>
+        <div>
+        <div class="row">
+            <div class="col-3">
+            <button onclick="getPandas()">load table</button>
+            </div>
+            <div id="pandas" class="col-9">
+            </div>
+        <div>
+        <div class="row">
+            <div class="col-3">
+            <button onclick="getSBimage()">seaborn graph</button>
+            </div>
+            <div class="col-9">
+                <img id="seaborn" width="1000">
+            </div>
+        <div>
+    </div>
+ 
+</div>
+<script>
+    function click1() {
+        fetch('{% url "combine:get-num" %}')
+            .then(res => res.text())
+            .then(data => document.getElementById('customer').innerHTML = data)
+    }
+ 
+    function getavg() {
+        var val_list = document.getElementById('avg').value;
+		fetch('{% url "combine:get-avg" %}'+"?val="+val_list)
+		.then(res => res.text())
+		.then(data => document.getElementById('avg_res').innerHTML = data)
+	}
+ 
+// In our fetch request example(run fetch request live), we create a new request using the Request() constructor, 
+//then use it to fetch a JPG.When the fetch is successful, we read a Blob out of the response using blob(), 
+//put it into an object URL using URL.createObjectURL, and then set that URL as the source of 
+//an < img > element to display the image.
+ 
+    function getimage() {
+		fetch('{% url "combine:get-graph" %}')
+		.then(res => res.blob()) // we read a Blob out of the response using blob() #A binary large object (BLOB) is a collection of binary data stored as a single entity.
+		.then(data => {
+            let imgURL = URL.createObjectURL(data) //the URL lifetime is tied to the document in the window on which it was created
+            document.getElementById('matplotlib').src = imgURL
+        })
+	}
+ 
+    function getPandas() {
+		fetch('{% url "combine:get-data" %}')
+		.then(res => res.text())
+		.then(data => document.getElementById('pandas').innerHTML = data)
+	} 
+ 
+    function getSBimage() {
+		fetch('{% url "combine:get-seaborn-graph" %}')
+		.then(res => res.blob())
+		.then(data => {
+            let imgURL = URL.createObjectURL(data)
+            document.getElementById('seaborn').src = imgURL
+        })
+	}
+ 
+</script>
+ 
+{% endblock %}

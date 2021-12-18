@@ -1,0 +1,10 @@
+{% extends "combine/base.html" %}
+{% block body_block%}
+<div class="container-fluid">
+    <center class="row">
+        <h2>Our implementation of Django Tables</h2>
+    </center>
+    {% load django_tables2 %}
+    {% render_table table %}
+</div>
+{% endblock %}

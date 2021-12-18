@@ -1,0 +1,12 @@
+{% extends "combine/base.html" %}
+{% block body_block%}
+<div class="container-fluid">
+    <center class="row">
+        <h2>Our implementation of Plotly</h2>
+    </center>
+    <!--//The autoscape would be a protection against cross site scripting, not sql injection (which you need to make sure your inputs are scrubbed).-->
+    {% autoescape off %}
+    {{plot_div}}
+    {% endautoescape %}
+</div>
+{% endblock %}
